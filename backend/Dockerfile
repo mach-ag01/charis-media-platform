@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "python manage.py showmigrations bookings && python manage.py migrate --plan && python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
+CMD ["sh", "-c", "echo '=== BOOKINGS MIGRATION FILES ===' && ls -la bookings/migrations && echo '=== BOOKINGS APP CONFIG ===' && python manage.py shell -c \"from django.apps import apps; c=apps.get_app_config('bookings'); print('App path:', c.path); print('Models:', [m.__name__ for m in c.get_models()])\" && echo '=== BOOKINGS MIGRATION STATUS ===' && python manage.py showmigrations bookings && echo '=== MIGRATION PLAN ===' && python manage.py migrate --plan && echo '=== APPLY MIGRATIONS ===' && python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
