@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Camera, Clapperboard, Palette, Globe, CalendarDays, Users, Wallet, CheckCircle2, Clock3, ArrowUpRight, Plus, Search, Menu, X, LayoutDashboard, BriefcaseBusiness, ClipboardList, Settings, ChevronRight, MapPin, Phone, Mail, Sparkles, Image, Video, PenTool, MonitorSmartphone, Instagram, CircleDollarSign, Download, ExternalLink, Filter, Bell} from 'lucide-react';
+import {Camera, Clapperboard, Palette, Globe, CalendarDays, Users, Wallet, CheckCircle2, Clock3, ArrowUpRight, Plus, Search, Menu, X, LayoutDashboard, BriefcaseBusiness, ClipboardList, Settings, ChevronRight, MapPin, Phone, Mail, Sparkles, Image, Video, PenTool, MonitorSmartphone, CircleDollarSign, Download, ExternalLink, Filter, Bell} from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 const serviceGroups = [
