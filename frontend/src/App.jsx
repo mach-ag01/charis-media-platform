@@ -26,10 +26,27 @@ const packages = [
 ];
 const nav = [{id:'overview',label:'Overview',icon:LayoutDashboard},{id:'bookings',label:'Bookings',icon:CalendarDays},{id:'projects',label:'Production board',icon:BriefcaseBusiness},{id:'clients',label:'Clients',icon:Users},{id:'payments',label:'Payments',icon:Wallet}];
 const money = n => new Intl.NumberFormat('en-KE',{style:'currency',currency:'KES',maximumFractionDigits:0}).format(Number(n||0));
+function getGreeting(){
+ const hour=Number(new Intl.DateTimeFormat('en-KE',{
+  timeZone:'Africa/Nairobi',
+  hour:'2-digit',
+  hourCycle:'h23'
+ }).format(new Date()));
+ if(hour>=5&&hour<12)return 'Good morning';
+ if(hour>=12&&hour<17)return 'Good afternoon';
+ return 'Good evening';
+}
+
 function App(){
- const [page,setPage]=useState('overview'),[mode,setMode]=useState('admin'),[mobileNav,setMobileNav]=useState(false),[showBooking,setShowBooking]=useState(false),[bookings,setBookings]=useState([]),[stats,setStats]=useState(null),[loading,setLoading]=useState(true),[notice,setNotice]=useState(''),[search,setSearch]=useState(''),[filter,setFilter]=useState('all'),[selected,setSelected]=useState(null);
+ const [greeting,setGreeting]=useState(getGreeting),[page,setPage]=useState('overview'),[mode,setMode]=useState('admin'),[mobileNav,setMobileNav]=useState(false),[showBooking,setShowBooking]=useState(false),[bookings,setBookings]=useState([]),[stats,setStats]=useState(null),[loading,setLoading]=useState(true),[notice,setNotice]=useState(''),[search,setSearch]=useState(''),[filter,setFilter]=useState('all'),[selected,setSelected]=useState(null);
  const refresh=async()=>{try{const [b,s]=await Promise.all([fetch(`${API}/bookings/`),fetch(`${API}/dashboard/`)]);if(b.ok)setBookings(await b.json());if(s.ok)setStats(await s.json());}catch(e){}finally{setLoading(false)}};
  useEffect(()=>{refresh()},[]);
+ useEffect(()=>{
+  const updateGreeting=()=>setGreeting(getGreeting());
+  updateGreeting();
+  const timer=setInterval(updateGreeting,60000);
+  return ()=>clearInterval(timer);
+ },[]);
  const flash=(msg)=>{setNotice(msg);setTimeout(()=>setNotice(''),3800)};
  const filtered=useMemo(()=>bookings.filter(b=>(`${b.full_name} ${b.company_name} ${b.email} ${b.venue}`.toLowerCase().includes(search.toLowerCase()))&&(filter==='all'||b.status===filter)),[bookings,search,filter]);
  const updateBooking=async(id,patch)=>{try{const r=await fetch(`${API}/bookings/${id}/`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(patch)});if(!r.ok)throw Error();await refresh();flash('Booking updated successfully.')}catch{flash('Could not update the API. Start the backend with Docker Compose and try again.')}};
@@ -39,7 +56,7 @@ function App(){
   {mobileNav&&<div className="scrim" onClick={()=>setMobileNav(false)}/>}
   <main className="main"><header className="topbar"><div className="top-left"><button className="icon-btn mobile-menu" onClick={()=>setMobileNav(true)}><Menu/></button><div className="breadcrumb">Workspace <ChevronRight size={14}/><b>{nav.find(n=>n.id===page)?.label||({services:'Service catalogue',settings:'Settings & help'}[page]||'Overview')}</b></div></div><div className="top-actions"><div className="mode-switch"><button className={mode==='admin'?'chosen':''} onClick={()=>setMode('admin')}>Admin</button><button className={mode==='client'?'chosen':''} onClick={()=>setMode('client')}>Client view</button></div><button className="icon-btn notification" title="Notifications"><Bell size={18}/><i/></button><div className="avatar top-avatar">CD</div></div></header>
   {mode==='client'?<ClientView onBook={()=>setShowBooking(true)} onAdmin={()=>setMode('admin')} bookings={bookings}/>:<div className="page-content">
-   {page==='overview'&&<><div className="welcome-row"><div><div className="eyebrow"><span className="eyebrow-dot"/> YOUR CREATIVE BUSINESS, IN ONE PLACE</div><h1>Good afternoon<span className="gold-dot">.</span></h1><p className="subheading">Here’s what’s happening across your studio today.</p></div><button className="primary-btn" onClick={()=>setShowBooking(true)}><Plus size={17}/> New booking</button></div>
+   {page==='overview'&&<><div className="welcome-row"><div><div className="eyebrow"><span className="eyebrow-dot"/> YOUR CREATIVE BUSINESS, IN ONE PLACE</div><h1>{greeting}<span className="gold-dot">.</span></h1><p className="subheading">Here’s what’s happening across your studio today.</p></div><button className="primary-btn" onClick={()=>setShowBooking(true)}><Plus size={17}/> New booking</button></div>
     <section className="hero-banner"><div className="hero-content"><div className="hero-chip"><Sparkles size={13}/> CHARIS DIGITAL CRAFTS MEDIA HOUSE</div><h2>Capturing stories.<br/><em>Building brands.</em></h2><p>Every project, every client, every detail — beautifully organised.</p><button className="hero-btn" onClick={()=>setPage('services')}>Explore services <ArrowUpRight size={16}/></button></div><div className="hero-art"><div className="art-orbit orbit-one"/><div className="art-orbit orbit-two"/><div className="art-circle"><Camera size={51} strokeWidth={1.2}/></div><div className="floating-card card-one"><Video size={17}/><span>Video production</span></div><div className="floating-card card-two"><Palette size={17}/><span>Brand identity</span></div><div className="floating-card card-three"><Image size={17}/><span>Photography</span></div></div><div className="hero-number">01 <span>/ CREATIVE STUDIO</span></div></section>
     <div className="section-heading"><div><h3>Studio at a glance</h3><p>Performance overview across your projects</p></div><span className="period-label"><CalendarDays size={14}/> All time</span></div>
     <div className="stat-grid"><Stat icon={CalendarDays} label="Total bookings" value={stats?.total_bookings??bookings.length} foot="All client enquiries" tone="gold"/><Stat icon={Clock3} label="New enquiries" value={stats?.new_enquiries??bookings.filter(b=>b.status==='new').length} foot="Awaiting review" tone="blue"/><Stat icon={Clapperboard} label="Active projects" value={stats?.active_projects??bookings.filter(b=>['confirmed','in_production','editing'].includes(b.status)).length} foot="In production or editing" tone="purple"/><Stat icon={CircleDollarSign} label="Quoted revenue" value={money(stats?.quoted_revenue??bookings.reduce((s,b)=>s+Number(b.quote_amount||0),0))} foot="Across all quotations" tone="green"/></div>
