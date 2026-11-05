@@ -7,3 +7,231 @@
 @media(max-width:1200px){.page-content{padding-left:25px;padding-right:25px}.topbar{padding:0 25px}.sidebar{width:225px}.main{margin-left:225px}.stat-grid{gap:9px}.stat-card{padding:14px}.stat-value{font-size:20px}.hero-art{right:1%;transform:scale(.88)}.service-category-grid,.package-grid{grid-template-columns:repeat(2,1fr)}.client-hero{padding-left:6%;padding-right:6%}.client-service-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.sidebar{transform:translateX(-100%);transition:transform .25s;width:260px}.sidebar.mobile-open{transform:translateX(0)}.main{margin-left:0}.scrim{display:block;position:fixed;inset:0;background:#0d142080;z-index:25}.mobile-menu,.close-nav{display:grid}.close-nav{margin-left:auto;color:#c1c8d2}.brand{align-items:center}.top-left{gap:8px}.dashboard-grid{grid-template-columns:1fr}.hero-art{right:-1%;opacity:.6}.hero-content{z-index:3}.stat-grid{grid-template-columns:repeat(2,1fr)}.client-hero{grid-template-columns:1fr 1fr;gap:20px}.client-hero-visual{max-width:350px}.visual-frame{height:300px}.client-process{padding-left:7%;padding-right:7%;gap:30px}.client-directory{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.topbar{height:59px;padding:0 13px}.top-actions{gap:8px}.mode-switch button{padding:7px 8px;font-size:9px}.breadcrumb{font-size:10px}.notification{display:none}.page-content{padding:23px 14px 35px}.welcome-row,.page-title-row{align-items:flex-start;flex-direction:column}.welcome-row h1,.page-title-row h1{font-size:27px}.welcome-row>.primary-btn,.page-title-row>.primary-btn{align-self:stretch}.hero-banner{padding:25px 22px;min-height:260px}.hero-content h2{font-size:27px}.hero-art{right:-100px;top:25px;transform:scale(.7);opacity:.26}.hero-number{right:15px}.stat-grid{gap:9px}.stat-card{padding:12px}.stat-value{font-size:19px}.stat-foot{font-size:8px;line-height:1.4}.dashboard-grid{gap:12px}.recent-panel,.workflow-panel{padding:14px 10px}.panel-head h3{font-size:12px}.panel-head p{font-size:9px}.bottom-strip{flex-wrap:wrap;padding:12px}.bottom-strip>div:nth-child(2){min-width:calc(100% - 55px)}.payment-mini{flex:1;padding:8px;border:0;border-top:1px solid var(--line)}.toolbar{flex-wrap:wrap}.search-box{max-width:none;flex-basis:100%}.filter-box{flex:1}.toolbar>.secondary-btn{padding:10px}.list-panel{padding:10px}.client-directory{grid-template-columns:1fr}.service-category-grid,.package-grid{grid-template-columns:1fr 1fr;gap:9px}.service-category{padding:12px}.service-category h3{font-size:11px}.service-category p{font-size:9px}.package-card{padding:12px}.package-card h3{font-size:12px}.package-card .primary-btn,.package-card .secondary-btn{white-space:normal}.settings-grid{grid-template-columns:1fr}.setting-line{align-items:flex-start}.setting-line b{max-width:55%}.client-site{margin-top:-59px}.client-nav{height:65px;padding:0 15px}.client-nav-links{gap:9px}.client-nav-links>a{display:none}.client-nav .text-btn{font-size:9px}.client-nav .primary-btn{font-size:9px;padding:9px}.client-brand{gap:7px}.client-brand b{font-size:12px}.client-brand span{font-size:7px;letter-spacing:1.8px}.client-hero{grid-template-columns:1fr;padding:49px 22px 58px;gap:35px}.client-hero h1{font-size:43px}.client-hero-copy>p{font-size:12px}.client-hero-actions{align-items:flex-start;flex-direction:column;gap:15px}.client-hero-visual{width:85%;max-width:340px}.visual-frame{height:300px}.visual-sticker{right:-18px}.client-services{padding:53px 18px}.client-section-heading h2{font-size:28px}.client-service-grid{grid-template-columns:1fr 1fr;gap:9px}.client-service-card{padding:13px;min-height:190px}.client-service-card h3{font-size:11px}.client-process{grid-template-columns:1fr;padding:53px 22px;gap:20px}.client-process h2{font-size:31px}.client-cta{padding:28px 22px;align-items:flex-start;flex-direction:column}.client-cta h2{font-size:23px}.client-footer{padding:20px 16px;flex-wrap:wrap}.client-footer>span{width:100%}.modal-backdrop{padding:0;align-items:flex-end}.booking-modal{border-radius:15px 15px 0 0;max-height:94vh}.modal-header{padding:20px 18px 15px}.modal-header h2{font-size:19px}.modal-progress{padding:0 18px}.step-label{padding:11px 18px 0}.modal-body{padding:16px 18px 19px}.modal-footer{padding:13px 18px 17px}.form-grid,.choice-grid,.package-choice-grid{grid-template-columns:1fr;gap:9px}.form-grid .field{margin-bottom:0}.field{margin-bottom:12px}.choice-card{grid-template-columns:20px 1fr 0fr}.choice-card b{grid-column:2;grid-row:1}.choice-card svg{grid-column:1;grid-row:2}.choice-card span{grid-column:2}.summary-card{grid-template-columns:1fr}.summary-card p{grid-column:auto}.step-label{font-size:7px}.detail-drawer{width:100%}.drawer-head{padding:19px}.drawer-body{padding:15px 19px}.detail-pair{gap:8px}.detail-pair b{max-width:58%}.milestone-grid{gap:7px}.milestone-grid b{font-size:14px}}
+
+/* =========================================
+   CHARIS DIGITAL CRAFTS — BRAND THEME
+   Turquoise • White • Gold • Deep Teal
+========================================= */
+
+:root {
+  --navy: #102B32;
+  --navy2: #163B42;
+  --gold: #FFA500;
+  --gold-light: #FFF2D9;
+  --muted: #71838A;
+  --line: #E4EEEE;
+  --paper: #FFFFFF;
+  --green: #159B83;
+  --shadow: 0 8px 30px rgba(16, 43, 50, .07);
+
+  --turquoise: #00DCCB;
+  --turquoise-dark: #00AFA5;
+  --deep-teal: #102B32;
+}
+
+/* Main backgrounds */
+body,
+.app-shell,
+.client-site {
+  background: #FFFFFF;
+  color: var(--deep-teal);
+}
+
+/* Navigation */
+.sidebar {
+  background: var(--deep-teal);
+}
+
+.nav-item.active {
+  background: #1C454B;
+  box-shadow: inset 3px 0 var(--turquoise);
+}
+
+.nav-item.active svg {
+  color: var(--turquoise);
+}
+
+.brand-mark {
+  background: var(--turquoise);
+  color: var(--deep-teal);
+}
+
+.client-nav {
+  background: #FFFFFF;
+  border-bottom-color: #E4EEEE;
+}
+
+/* Primary buttons */
+.primary-btn {
+  background: var(--turquoise);
+  border-color: var(--turquoise);
+  color: var(--deep-teal);
+}
+
+.primary-btn:hover {
+  background: var(--turquoise-dark);
+  border-color: var(--turquoise-dark);
+  color: #FFFFFF;
+}
+
+.hero-btn {
+  background: var(--gold);
+  color: var(--deep-teal);
+}
+
+/* Hero sections */
+.hero-banner {
+  background: linear-gradient(
+    115deg,
+    #102B32 0%,
+    #16464C 70%,
+    #087D7B 100%
+  );
+}
+
+.hero-content h2 em,
+.client-hero h1 em,
+.client-section-heading h2 em,
+.client-process h2 em {
+  color: var(--turquoise);
+}
+
+.hero-chip,
+.hero-number {
+  color: var(--gold);
+}
+
+/* Client-facing website */
+.client-site {
+  background: #FFFFFF;
+}
+
+.client-hero {
+  background: #FFFFFF;
+}
+
+.client-services {
+  background: #F0FCFA;
+}
+
+.client-service-card {
+  background: #FFFFFF;
+  border-color: #D9F1ED;
+}
+
+.client-service-top,
+.client-service-card button {
+  color: var(--turquoise-dark);
+}
+
+.client-cta {
+  background: var(--deep-teal);
+}
+
+.client-cta .eyebrow {
+  color: var(--turquoise);
+}
+
+.client-footer {
+  background: #FFFFFF;
+}
+
+/* Headings and highlights */
+.eyebrow,
+.gold-dot,
+.text-btn,
+.subtle-link {
+  color: var(--turquoise-dark);
+}
+
+.eyebrow-dot {
+  background: var(--gold);
+}
+
+/* Cards and dashboard */
+.panel,
+.stat-card,
+.package-card,
+.settings-panel,
+.directory-card,
+.list-panel {
+  background: #FFFFFF;
+  border-color: #E2EEEE;
+}
+
+.stat-icon.blue,
+.tiny-dot.blue {
+  background: #E2F9F6;
+  color: #008F86;
+}
+
+.stat-icon.gold,
+.tiny-dot.gold,
+.category-icon,
+.workflow-icon {
+  background: #FFF2D9;
+  color: #C27B00;
+}
+
+/* Booking forms */
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--turquoise-dark);
+  box-shadow: 0 0 0 3px #00DCCB22;
+}
+
+.choice-card.selected,
+.package-choice.selected,
+.consent-row.checked {
+  border-color: var(--turquoise-dark);
+  background: #F0FCFA;
+}
+
+.choice-card input,
+.package-choice input,
+.consent-row input {
+  accent-color: var(--turquoise-dark);
+}
+
+/* Important status and interaction accents */
+.package-card.popular {
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px #FFA50020;
+}
+
+.popular-label {
+  background: var(--deep-teal);
+  color: var(--gold);
+}
+
+.status-new {
+  color: #986000;
+  background: #FFF2D9;
+}
+
+.toast {
+  background: var(--deep-teal);
+  border-left: 3px solid var(--turquoise);
+}
+
+.toast svg {
+  color: var(--turquoise);
+}
+
+/* Consistent borders and focus */
+.secondary-btn:hover {
+  border-color: var(--turquoise-dark);
+  background: #F0FCFA;
+}
+
+.project-card:hover {
+  border-color: var(--turquoise-dark);
+}
+
+.workflow-step .step-number {
+  background: #E2F9F6;
+  color: #008F86;
+}
+
+/* Mobile and responsive layouts inherit the same theme */
