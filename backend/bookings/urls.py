@@ -1,7 +1,6 @@
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenBlacklistView
 
 from .views import (
     BookingViewSet,
@@ -14,6 +13,7 @@ from .auth_views import (
     LoginView,
     RefreshTokenView,
     CurrentUserView,
+    StaffAccountCreateView,
 )
 
 router = DefaultRouter()
@@ -52,8 +52,13 @@ urlpatterns = [
         CurrentUserView.as_view(),
         name="current-user",
     ),
+    path(
+        "auth/staff/create/",
+        StaffAccountCreateView.as_view(),
+        name="staff-create",
+    ),
 
-    # Existing application endpoints
+    # Application endpoints
     path("dashboard/", dashboard),
     path("", include(router.urls)),
 ]
