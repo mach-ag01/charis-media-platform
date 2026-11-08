@@ -19,8 +19,31 @@ logger = logging.getLogger(__name__)
 def send_booking_notification(booking):
     """Notify the Charis Media House owner of a new booking."""
 
-    service_labels = dict(Booking._meta.get_field("services").choices or [])
-    package_labels = dict(Booking._meta.get_field("packages").choices or [])
+service_labels = {
+    "videography": "Videography",
+    "photography": "Photography",
+    "branding": "Strategic Branding & Identity",
+    "digital": "Digital Marketing & UI Solutions",
+    "photomounts": "Photomounts",
+}
+
+package_labels = {
+    "silver": "Silver",
+    "gold": "Gold",
+    "platinum": "Platinum",
+    "custom": "Custom / hourly",
+    "studio": "Indoor studio shoot",
+    "outdoor": "Outdoor / location shoot",
+    "half_day": "Half-day event coverage",
+    "full_day": "Full-day event coverage",
+    "identity": "Visual corporate identity kit",
+    "stationery": "Corporate stationery pack",
+    "typography": "Typography & slogan branding",
+    "web_mockups": "Responsive web interface mockups",
+    "social_retainer": "Social media retainer strategy",
+    "reels": "TikTok / Instagram Reels management",
+    "photomounts_a4_a0": "Photomounts (A4–A0)",
+}
 
     services = booking.services or []
     packages = booking.packages or []
