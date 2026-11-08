@@ -1,4 +1,9 @@
+from rest_framework import status
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAuthenticated
 
+from .auth_serializers import StaffAccountSerializer
+from .permissions import IsAdministrator
 from django.contrib.auth import get_user_model
 
 from rest_framework import generics, permissions
@@ -47,3 +52,29 @@ class CurrentUserView(APIView):
             "role": get_user_role(user),
             "phone": profile.phone if profile else "",
         })
+
+class StaffAccountCreateView(CreateAPIView):
+    serializer_class = StaffAccountSerializer
+    permission_classes = [IsAuthenticated, IsAdministrator]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.save()
+
+        return Response(
+            {
+                "message": "Staff account created successfully.",
+                "staff": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "role": user.profile.role,
+                    "phone": user.profile.phone,
+                },
+            },
+            status=status.HTTP_201_CREATED,
+        )
