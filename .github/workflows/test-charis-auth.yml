@@ -1,0 +1,61 @@
+
+name: Test Charis Authentication
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-login:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test administrator login
+        env:
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+          import urllib.error
+
+          url = "https://charis-media-api.onrender.com/api/auth/login/"
+
+          payload = json.dumps({
+              "username": os.environ["ADMIN_USERNAME"],
+              "password": os.environ["ADMIN_PASSWORD"],
+          }).encode()
+
+          request = urllib.request.Request(
+              url,
+              data=payload,
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+
+          try:
+              with urllib.request.urlopen(request, timeout=90) as response:
+                  result = json.loads(response.read())
+
+              user = result.get("user", {})
+
+              assert result.get("access"), "Access token missing"
+              assert result.get("refresh"), "Refresh token missing"
+              assert user.get("role") == "super_admin", (
+                  f"Unexpected administrator role: {user.get('role')}"
+              )
+
+              print("SUCCESS: Administrator authentication works.")
+              print("SUCCESS: JWT access and refresh tokens issued.")
+              print("SUCCESS: Existing account recognized as super_admin.")
+
+          except urllib.error.HTTPError as error:
+              print("Login failed with HTTP status:", error.code)
+              raise
+          PY
