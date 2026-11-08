@@ -11,6 +11,79 @@ from .permissions import get_user_role
 User = get_user_model()
 
 
+class StaffAccountSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        write_only=True,
+        validators=[validate_password],
+        style={"input_type": "password"},
+    )
+
+    role = serializers.ChoiceField(
+        choices=[
+            ("administrator", "Administrator"),
+            ("production", "Production Staff"),
+            ("finance", "Finance Staff"),
+        ]
+    )
+
+    phone = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=40,
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "password",
+            "role",
+            "phone",
+        )
+        read_only_fields = ("id",)
+
+    def validate_email(self, value):
+        value = value.strip().lower()
+
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError(
+                "An account with this email already exists."
+            )
+
+        return value
+
+    def validate_username(self, value):
+        value = value.strip()
+
+        if User.objects.filter(username__iexact=value).exists():
+            raise serializers.ValidationError(
+                "This username is already taken."
+            )
+
+        return value
+
+    @transaction.atomic
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        role = validated_data.pop("role")
+        phone = validated_data.pop("phone", "")
+
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+
+        UserProfile.objects.create(
+            user=user,
+            role=role,
+            phone=phone,
+        )
+
+        return user
+
 class CustomerRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,
