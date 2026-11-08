@@ -1,0 +1,107 @@
+
+name: Test Charis Customer Authentication
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-customer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test customer registration and permissions
+        env:
+          API_URL: https://charis-media-api.onrender.com/api
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import secrets
+          import urllib.request
+          import urllib.error
+
+          base = os.environ["API_URL"]
+          username = "testcustomer" + os.environ["RUN_ID"]
+          password = secrets.token_urlsafe(24) + "Aa1!"
+
+          def request(path, method="GET", data=None, token=None):
+              headers = {"Content-Type": "application/json"}
+              if token:
+                  headers["Authorization"] = "Bearer " + token
+
+              body = json.dumps(data).encode() if data is not None else None
+              req = urllib.request.Request(
+                  base + path,
+                  data=body,
+                  headers=headers,
+                  method=method,
+              )
+
+              try:
+                  with urllib.request.urlopen(req, timeout=90) as response:
+                      content = response.read()
+                      return response.status, json.loads(content) if content else {}
+              except urllib.error.HTTPError as error:
+                  content = error.read()
+                  try:
+                      result = json.loads(content)
+                  except Exception:
+                      result = {}
+                  return error.code, result
+
+          status, result = request(
+              "/auth/register/",
+              "POST",
+              {
+                  "username": username,
+                  "email": username + "@example.com",
+                  "first_name": "Test",
+                  "last_name": "Customer",
+                  "password": password,
+                  "phone": "",
+              },
+          )
+
+          assert status == 201, f"Registration failed: {status} {result}"
+          print("SUCCESS: Customer registration works.")
+
+          status, result = request(
+              "/auth/login/",
+              "POST",
+              {"username": username, "password": password},
+          )
+
+          assert status == 200, f"Login failed: {status} {result}"
+          token = result.get("access")
+          assert token, "Access token missing"
+          assert result.get("user", {}).get("role") == "customer"
+          print("SUCCESS: Customer login works.")
+
+          status, profile = request("/auth/me/", token=token)
+          assert status == 200, f"Profile failed: {status} {profile}"
+          assert profile.get("role") == "customer"
+          print("SUCCESS: Customer profile works.")
+
+          status, _ = request(
+              "/auth/staff/create/",
+              "POST",
+              {
+                  "username": username + "staff",
+                  "email": username + "staff@example.com",
+                  "password": secrets.token_urlsafe(24) + "Aa1!",
+                  "role": "production",
+              },
+              token=token,
+          )
+
+          assert status == 403, (
+              f"Customer unexpectedly accessed staff creation: HTTP {status}"
+          )
+          print("SUCCESS: Customers cannot create staff accounts.")
+          PY
