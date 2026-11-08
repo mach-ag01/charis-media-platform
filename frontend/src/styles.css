@@ -292,4 +292,41 @@ img.charis-logo {
   }
 }
 
+
+/* Charis authentication and customer portal */
+.auth-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(8,29,34,.72);display:grid;place-items:center;padding:22px;overflow:auto}
+.auth-card{position:relative;width:min(100%,480px);background:#fff;border-radius:22px;padding:34px;box-shadow:0 24px 80px rgba(0,0,0,.22);color:#102B32}
+.auth-card>img{display:block;width:170px;max-height:70px;object-fit:contain;margin:0 auto 24px}
+.auth-card h1{font-size:30px;margin:10px 0 8px;color:#102B32}
+.auth-card>p{color:#71838A;line-height:1.6;margin:0 0 22px}
+.auth-card form{display:grid;gap:12px}
+.auth-card input{width:100%;min-width:0;border:1px solid #DCE8E8;border-radius:10px;padding:13px 14px;font:inherit;color:#102B32;background:#fff}
+.auth-card input:focus{outline:2px solid rgba(0,220,203,.35);border-color:#00AFA5}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.auth-submit{width:100%;justify-content:center;margin-top:4px}
+.auth-close{position:absolute;right:16px;top:12px;border:0;background:#F0F7F6;border-radius:50%;width:34px;height:34px;font-size:23px;color:#102B32;cursor:pointer}
+.auth-switch{text-align:center;margin-top:20px;color:#71838A;font-size:14px}
+.auth-switch button{border:0;background:none;color:#008F86;font-weight:700;cursor:pointer}
+.auth-foot{text-align:center!important;font-size:12px!important;margin:18px 0 0!important}
+.auth-error{color:#B42318!important;background:#FFF1F0;padding:10px 12px;border-radius:8px;font-size:13px;margin:0!important}
+.charis-logout{position:fixed;right:20px;bottom:18px;z-index:500;border:1px solid rgba(0,220,203,.4);background:#102B32;color:#fff;border-radius:999px;padding:11px 16px;box-shadow:0 8px 25px rgba(16,43,50,.22);cursor:pointer}
+.customer-portal{min-height:100vh;background:#F4FAF9;color:#102B32}
+.customer-portal-head{height:82px;background:#fff;border-bottom:1px solid #E4EEEE;padding:12px clamp(18px,5vw,70px);display:flex;align-items:center;justify-content:space-between}
+.customer-portal-head img{width:170px;max-height:58px;object-fit:contain}
+.customer-portal-head>div{display:flex;align-items:center;gap:18px;color:#71838A;font-size:13px}
+.customer-portal-head button{border:1px solid #DCE8E8;background:#fff;border-radius:9px;padding:9px 13px;color:#102B32;cursor:pointer}
+.customer-portal-main{max-width:1050px;margin:0 auto;padding:58px 24px}
+.customer-portal-main h1{font-size:38px;margin:10px 0}
+.customer-portal-main>p{color:#71838A;margin-bottom:28px}
+.customer-empty,.customer-project-list article{background:#fff;border:1px solid #E4EEEE;border-radius:16px;padding:24px}
+.customer-empty p,.customer-project-list p{color:#71838A;line-height:1.6}
+.customer-project-list{display:grid;gap:14px}
+.customer-project-list article{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.customer-project-list small{color:#008F86;font-weight:700;letter-spacing:.08em}
+.customer-project-list h3{margin:8px 0}
+.customer-project-list p{margin:0}
+.customer-project-list a{color:#008F86;font-weight:700}
+@media(max-width:560px){.auth-card{padding:26px 20px}.auth-grid{grid-template-columns:1fr}.customer-portal-head{height:auto;gap:12px;align-items:flex-start}.customer-portal-head>div{align-items:flex-end;flex-direction:column;gap:8px}.customer-portal-main{padding:38px 18px}.customer-portal-main h1{font-size:30px}.customer-project-list article{align-items:flex-start;flex-direction:column}}
+
+
 /* Mobile and responsive layouts inherit the same theme */
