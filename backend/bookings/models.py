@@ -160,3 +160,34 @@ class ProductionTask(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class UserProfile(models.Model):
+
+    ROLE_CHOICES = [
+        ("administrator", "Administrator"),
+        ("production", "Production Staff"),
+        ("finance", "Finance Staff"),
+        ("customer", "Customer"),
+    ]
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="profile",
+    )
+
+    role = models.CharField(
+        max_length=24,
+        choices=ROLE_CHOICES,
+        default="customer",
+    )
+
+    phone = models.CharField(max_length=40, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username} — {self.get_role_display()}"
+
