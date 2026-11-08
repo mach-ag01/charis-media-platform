@@ -43,11 +43,17 @@ class BookingViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             return [permissions.AllowAny()]
 
+        if self.action in ("list", "retrieve"):
+            return [
+                permissions.IsAuthenticated(),
+                IsOwnerOrStaff(),
+            ]
+
         return [
             permissions.IsAuthenticated(),
+            IsStaffMember(),
             IsOwnerOrStaff(),
         ]
-
     def perform_create(self, serializer):
         user = self.request.user
 
